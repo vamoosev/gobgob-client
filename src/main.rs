@@ -12,9 +12,10 @@ async fn main() {
     // capture packets while time is less than 7pm
     while chrono::Local::now().time() < chrono::NaiveTime::from_hms(19, 0, 0) {
         //capture packet
-        let packet = cap.next_packet();
-        //add packet to vector
-        packets.push(packet.unwrap());
+        if let Ok(packet) = cap.next_packet() {
+            // add packet to vector
+            packets.push(packet);
+        }
     }
 
     // convert pacekts to mac addresses
